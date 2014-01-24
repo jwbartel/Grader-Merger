@@ -1,5 +1,7 @@
 package mergingTools;
 
+import mergingTools.utils.MergingEnvironment;
+
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
@@ -18,7 +20,7 @@ public class Driver {
 
 			// Get the project name
 			String projectName = configuration.getString("project.name");
-//			GradingEnvironment.get().setAssignmentName(projectName);
+			MergingEnvironment.get().setAssignmentName(projectName);
 
 //            // Get the project requirements
 //            Class<?> _class = Class.forName(configuration.getString("project.requirements"));
