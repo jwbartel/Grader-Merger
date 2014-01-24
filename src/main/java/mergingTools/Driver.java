@@ -5,6 +5,9 @@ import mergingTools.utils.MergingEnvironment;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
+import framework.logging.recorder.ConglomerateRecorder;
+import framework.merging.MergingGradesRequirements;
+
 /**
  * This is the entry class for the grading tools that Maven will reference. Use
  * config.properties to configure what gets run.
@@ -22,13 +25,9 @@ public class Driver {
 			String projectName = configuration.getString("project.name");
 			MergingEnvironment.get().setAssignmentName(projectName);
 
-//            // Get the project requirements
-//            Class<?> _class = Class.forName(configuration.getString("project.requirements"));
-//            ProjectRequirements requirements = (ProjectRequirements) _class.newInstance();
-//
-//            // Logging
-//            ConglomerateRecorder recorder = ConglomerateRecorder.getInstance();
-//            recorder.setProjectRequirements(requirements);
+			// Logging
+			ConglomerateRecorder recorder = ConglomerateRecorder.getInstance();
+			recorder.setProjectRequirements(new MergingGradesRequirements());
 
 			String[] loggingMethods = configuration.getString("grader.logger", "csv").split(
 					"\\s*\\+\\s*");
