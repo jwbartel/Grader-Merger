@@ -10,6 +10,7 @@ import mergingTools.utils.SpreadsheetMerger;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
+import framework.merging.ProjectMergingRules;
 import framework.merging.logging.ConglomerateMergerLogger;
 import framework.merging.logging.loggers.LocalTextSummaryMerger;
 
@@ -30,8 +31,14 @@ public class Driver {
 			String projectName = configuration.getString("project.name");
 			MergingEnvironment.get().setAssignmentName(projectName);
 
+            // Get the project merging rules
+            Class<?> _class = Class.forName(configuration.getString("project.merging_rules"));
+            ProjectMergingRules projectRules = (ProjectMergingRules) _class.newInstance();
+
 			// Logging
 			ConglomerateMergerLogger merger = ConglomerateMergerLogger.getInstance();
+			merger.setProjectMergingRules(projectRules);
+			
 			String[] loggingMethods = configuration.getString("grader.logger", "csv").split(
 					"\\s*\\+\\s*");
 			for (String method : loggingMethods) {
@@ -87,15 +94,15 @@ public class Driver {
 		} catch (ConfigurationException e) {
 			System.err.println("Error loading config file.");
 			System.err.println(e.getMessage());
-//		} catch (ClassNotFoundException e) {
-//			System.err.println("Could not find project requirements.");
-//			System.err.println(e.getMessage());
-//		} catch (InstantiationException e) {
-//			System.err.println("Could not create project requirements.");
-//			System.err.println(e.getMessage());
-//		} catch (IllegalAccessException e) {
-//			System.err.println("Could not create project requirements.");
-//			System.err.println(e.getMessage());
+		} catch (ClassNotFoundException e) {
+			System.err.println("Could not find project merging rules.");
+			System.err.println(e.getMessage());
+		} catch (InstantiationException e) {
+			System.err.println("Could not create project merging rules.");
+			System.err.println(e.getMessage());
+		} catch (IllegalAccessException e) {
+			System.err.println("Could not create project merging rules.");
+			System.err.println(e.getMessage());
 		}
 	}
 }
