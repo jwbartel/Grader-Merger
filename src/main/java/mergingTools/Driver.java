@@ -1,12 +1,17 @@
 package mergingTools;
 
+import mergingTools.utils.CsvMerger;
+import mergingTools.utils.FeedbackJsonMerger;
+import mergingTools.utils.FeedbackTextSummaryMerger;
+import mergingTools.utils.LocalJsonMerger;
 import mergingTools.utils.MergingEnvironment;
+import mergingTools.utils.SpreadsheetMerger;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-import framework.logging.recorder.ConglomerateRecorder;
-import framework.merging.MergingGradesRequirements;
+import framework.merging.logging.ConglomerateMergerLogger;
+import framework.merging.logging.loggers.LocalTextSummaryMerger;
 
 /**
  * This is the entry class for the grading tools that Maven will reference. Use
@@ -26,26 +31,24 @@ public class Driver {
 			MergingEnvironment.get().setAssignmentName(projectName);
 
 			// Logging
-			ConglomerateRecorder recorder = ConglomerateRecorder.getInstance();
-			recorder.setProjectRequirements(new MergingGradesRequirements());
-
+			ConglomerateMergerLogger merger = ConglomerateMergerLogger.getInstance();
 			String[] loggingMethods = configuration.getString("grader.logger", "csv").split(
 					"\\s*\\+\\s*");
 			for (String method : loggingMethods) {
 
-//                // Add loggers
-//                if (method.equals("local") || method.equals("local-txt"))
-//                    recorder.addLogger(new LocalTextSummaryLogger());
-//                if (method.equals("local") || method.equals("local-json"))
-//                    recorder.addLogger(new LocalJsonLogger());
-//                if (method.equals("feedback") || method.equals("feedback-txt"))
-//                    recorder.addLogger(new FeedbackTextSummaryLogger());
-//                if (method.equals("feedback") || method.equals("feedback-json"))
-//                    recorder.addLogger(new FeedbackJsonLogger());
-//                if (method.equals("spreadsheet"))
-//                    recorder.addLogger(new SpreadsheetLogger(requirements));
-//                if (method.equals("csv"))
-//                    recorder.addLogger(new CsvLogger());
+                // Add loggers
+                if (method.equals("local") || method.equals("local-txt"))
+                   	merger.addLogger(new LocalTextSummaryMerger());
+                if (method.equals("local") || method.equals("local-json"))
+                	merger.addLogger(new LocalJsonMerger());
+                if (method.equals("feedback") || method.equals("feedback-txt"))
+                	merger.addLogger(new FeedbackTextSummaryMerger());
+                if (method.equals("feedback") || method.equals("feedback-json"))
+                	merger.addLogger(new FeedbackJsonMerger());
+                if (method.equals("spreadsheet"))
+                	merger.addLogger(new SpreadsheetMerger());
+                if (method.equals("csv"))
+                	merger.addLogger(new CsvMerger());
 			}
 
 //            // Run the grading process
