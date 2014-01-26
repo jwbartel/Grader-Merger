@@ -8,4 +8,6 @@ public interface ProjectMergingRules {
 	public void setGeneralRule(MergingRule rule);
 
 	public void add(ResultType resultType, MergingRule rule);
+
+	public Object getMergedVal(ResultType resultType, Object val1, Object val2);
 }

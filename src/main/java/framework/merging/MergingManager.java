@@ -1,8 +1,7 @@
 package framework.merging;
 
-import java.io.File;
-
 import mergingTools.utils.MergingEnvironment;
+import framework.merging.logging.ConglomerateMergerLogger;
 import framework.merging.navigation.GraderResultFolder;
 import framework.merging.navigation.MergeableGraderResultFolders;
 import framework.merging.navigation.NotValidResultFolder;
@@ -17,12 +16,11 @@ public class MergingManager {
 	}
 
 	public void run() {
-		File outputFolder = MergingEnvironment.get().getOutputFolder();
 		MergeableGraderResultFolders resultFolders = MergingEnvironment.get().getMergeableFolders();
 
 		try {
 			for (GraderResultFolder resultFolder : resultFolders.getGraderResultFolders()) {
-				// TODO: merge results with output folder
+				ConglomerateMergerLogger.getInstance().mergeResults(resultFolder);
 			}
 		} catch (NotValidResultFolder e) {
 			System.out.println("Result folder not valid: " + e.getMessage());

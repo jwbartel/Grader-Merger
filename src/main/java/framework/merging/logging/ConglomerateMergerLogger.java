@@ -1,9 +1,10 @@
 package framework.merging.logging;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import framework.merging.ProjectMergingRules;
+import framework.merging.navigation.GraderResultFolder;
 
 public class ConglomerateMergerLogger {
 	// Static singleton boilerplate code
@@ -16,18 +17,24 @@ public class ConglomerateMergerLogger {
 
 	// Actual definition
 
-	private ProjectMergingRules projectMergingRules;
 	private List<MergerLogger> loggers;
+	private File outputFolder;
 
 	private ConglomerateMergerLogger() {
 		loggers = new ArrayList<MergerLogger>();
 	}
 
-	public void setProjectMergingRules(ProjectMergingRules projectRules) {
-		this.projectMergingRules = projectRules;
+	public void setOutputFolder(File folder) {
+		this.outputFolder = folder;
 	}
 
 	public void addLogger(MergerLogger logger) {
 		loggers.add(logger);
+	}
+
+	public void mergeResults(GraderResultFolder resultFolder) {
+		for (MergerLogger logger : loggers) {
+			logger.mergeResults(resultFolder, outputFolder);
+		}
 	}
 }

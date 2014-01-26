@@ -10,6 +10,7 @@ import mergingTools.utils.SpreadsheetMerger;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
+import framework.merging.MergingManager;
 import framework.merging.ProjectMergingRules;
 import framework.merging.logging.ConglomerateMergerLogger;
 import framework.merging.logging.loggers.LocalTextSummaryMerger;
@@ -30,19 +31,20 @@ public class Driver {
 			String mergingInput = configuration.getString("merger.input");
 			String mergingOutput = configuration.getString("merger.output");
 
-			// Get the project name
-			String projectName = configuration.getString("project.name");
-			MergingEnvironment.get().setAssignmentName(projectName);
-			MergingEnvironment.get().setMergeableFolders(mergingInput);
-			MergingEnvironment.get().setOutputFolder(mergingOutput);
-
 			// Get the project merging rules
 			Class<?> _class = Class.forName(configuration.getString("project.merging_rules"));
 			ProjectMergingRules projectRules = (ProjectMergingRules) _class.newInstance();
 
+			// Get the project name
+			String projectName = configuration.getString("project.name");
+			MergingEnvironment.get().setAssignmentName(projectName);
+			MergingEnvironment.get().setMergingRules(projectRules);
+			MergingEnvironment.get().setMergeableFolders(mergingInput);
+			MergingEnvironment.get().setOutputFolder(mergingOutput);
+
 			// Logging
 			ConglomerateMergerLogger merger = ConglomerateMergerLogger.getInstance();
-			merger.setProjectMergingRules(projectRules);
+			merger.setOutputFolder(MergingEnvironment.get().getOutputFolder());
 
 			String[] loggingMethods = configuration.getString("grader.logger", "csv").split(
 					"\\s*\\+\\s*");
@@ -69,45 +71,8 @@ public class Driver {
 				}
 			}
 
-			// // Run the grading process
-			// String controller = configuration.getString("grader.controller",
-			// "GradingManager");
-			// if (controller.equals("GradingManager")) {
-			//
-			// // Run the GraderManager
-			// GradingManager manager = new GradingManager(projectName,
-			// requirements);
-			// manager.run();
-			//
-			// } else if (controller.equals("SakaiProjectDatabase")) {
-			//
-			// // Start the grading process by, first, getting the settings the
-			// running the project database
-			// SettingsWindow settingsWindow = SettingsWindow.create();
-			// settingsWindow.awaitBegin();
-			//
-			// // Logging/results saving
-			// FeatureGradeRecorderSelector.setFactory(new
-			// ConglomerateRecorderFactory());
-			//
-			// // Create the database
-			// ProjectDatabaseWrapper database = new ProjectDatabaseWrapper();
-			// database.addProjectRequirements(requirements);
-			//
-			// // Possibly set the stepper displayer
-			// boolean useFrameworkGUI =
-			// configuration.getBoolean("grader.controller.useFrameworkGUI",
-			// false);
-			// if (useFrameworkGUI)
-			// database.setProjectStepperDisplayer(new
-			// ProjectStepperDisplayerWrapper());
-			//
-			// // Feedback
-			// // database.setAutoFeedback(ConglomerateRecorder.getInstance());
-			// database.setManualFeedback(ConglomerateRecorder.getInstance());
-			//
-			// database.nonBlockingRunProjectsInteractively();
-			// }
+			MergingManager manager = new MergingManager(projectName);
+			manager.run();
 
 		} catch (ConfigurationException e) {
 			System.err.println("Error loading config file.");

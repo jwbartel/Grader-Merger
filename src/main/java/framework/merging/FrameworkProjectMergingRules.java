@@ -25,4 +25,14 @@ public class FrameworkProjectMergingRules implements ProjectMergingRules {
 		rules.put(resultType, rule);
 	}
 
+	public Object getMergedVal(ResultType resultType, Object val1, Object val2) {
+		MergingRule rule = rules.get(resultType);
+
+		if (rule != null) {
+			return rule.mergeResults(val1, val2);
+		} else {
+			return generalRule.mergeResults(val1, val2);
+		}
+	}
+
 }

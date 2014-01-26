@@ -5,7 +5,7 @@ import java.io.File;
 import framework.merging.logging.MergerLogger;
 import framework.merging.navigation.GraderResultFolder;
 
-public class LocalTextSummaryMerger extends MergerLogger {
+public class LocalJsonMerger extends MergerLogger {
 
 	@Override
 	public void mergeResults(GraderResultFolder resultFolder, File outputFolder) {
