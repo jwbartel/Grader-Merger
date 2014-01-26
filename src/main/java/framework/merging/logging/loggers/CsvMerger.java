@@ -93,7 +93,7 @@ public class CsvMerger extends MergerLogger {
 	@Override
 	public void mergeResults(GraderResultFolder resultFolder, File outputFolder) {
 		File csvFile = resultFolder.getBulkDownloadFolder().getGrades();
-		File outputCsvFile = findLocationInOutput(outputFolder, resultFolder, csvFile);
+		File outputCsvFile = findLocationInMerge(outputFolder, resultFolder, csvFile);
 
 		if (!outputCsvFile.exists()) {
 			try {

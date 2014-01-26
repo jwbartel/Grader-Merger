@@ -6,7 +6,7 @@ import framework.merging.navigation.GraderResultFolder;
 
 public abstract class MergerLogger {
 
-	public static File findLocationInOutput(File outputFolder, GraderResultFolder inFolder,
+	public static File findLocationInMerge(File outputFolder, GraderResultFolder inFolder,
 			File input) {
 
 		File inputPath = inFolder.getFolder();
