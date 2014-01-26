@@ -24,6 +24,8 @@ public class Driver {
 	public static void main(String[] args) {
 
 		try {
+			System.out.println("Intializing...");
+
 			// Load the config file
 			PropertiesConfiguration configuration = new PropertiesConfiguration(
 					"./config/config.properties");
@@ -74,6 +76,7 @@ public class Driver {
 					merger.addLogger(new CsvMerger());
 				}
 			}
+			System.out.println("done.");
 
 			MergingManager manager = new MergingManager(projectName);
 			manager.run();

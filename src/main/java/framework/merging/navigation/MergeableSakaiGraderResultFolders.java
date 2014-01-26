@@ -21,6 +21,7 @@ public class MergeableSakaiGraderResultFolders implements MergeableGraderResultF
 
 		List<GraderResultFolder> resultFolders = new ArrayList<GraderResultFolder>();
 		for (File subfolder : subfolders) {
+			System.out.println("Loading results from " + subfolder.getName());
 			resultFolders.add(new SakaiGraderResultFolder(subfolder.getAbsolutePath()));
 		}
 

@@ -61,6 +61,7 @@ public class SakaiGraderResultFolder implements GraderResultFolder {
 
 		// Extract the zip to look for the folder
 		try {
+			System.out.println("Extracting bulk downloads...");
 			ZipFile zip = new ZipFile(zipFile.get());
 			zip.extractAll(folder.getAbsolutePath());
 
@@ -79,6 +80,7 @@ public class SakaiGraderResultFolder implements GraderResultFolder {
 					return Option.empty();
 				}
 			}
+			System.out.println("done.");
 			return Option.empty();
 		} catch (ZipException e) {
 			return Option.empty();

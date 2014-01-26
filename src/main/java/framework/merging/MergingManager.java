@@ -20,6 +20,7 @@ public class MergingManager {
 
 		try {
 			for (GraderResultFolder resultFolder : resultFolders.getGraderResultFolders()) {
+				System.out.println("Merging results from " + resultFolder.getFolder());
 				ConglomerateMergerLogger.getInstance().mergeResults(resultFolder);
 			}
 		} catch (NotValidResultFolderException e) {
