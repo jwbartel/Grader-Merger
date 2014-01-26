@@ -21,19 +21,19 @@ public class MergingEnvironment {
 	public void setAssignmentName(String assignmentName) {
 		this.assignmentName = assignmentName;
 	}
-	
+
 	public MergeableGraderResultFolders getMergeableFolders() {
 		return mergeableFolders;
 	}
-	
+
 	public void setMergeableFolders(String path) {
 		this.mergeableFolders = new MergeableSakaiGraderResultFolders(path);
 	}
-	
+
 	public File getOutputFolder() {
 		return outputFolder;
 	}
-	
+
 	public void setOutputFolder(String path) {
 		this.outputFolder = new File(path);
 	}
@@ -42,8 +42,9 @@ public class MergingEnvironment {
 	private static MergingEnvironment singleton = null;
 
 	public static MergingEnvironment get() {
-		if (singleton == null)
+		if (singleton == null) {
 			singleton = new MergingEnvironment();
+		}
 		return singleton;
 	}
 }

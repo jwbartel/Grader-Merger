@@ -13,7 +13,6 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import framework.merging.ProjectMergingRules;
 import framework.merging.logging.ConglomerateMergerLogger;
 import framework.merging.logging.loggers.LocalTextSummaryMerger;
-import framework.merging.navigation.MergeableGraderResultFolders;
 
 /**
  * This is the entry class for the grading tools that Maven will reference. Use
@@ -27,8 +26,8 @@ public class Driver {
 			// Load the config file
 			PropertiesConfiguration configuration = new PropertiesConfiguration(
 					"./config/config.properties");
-			
-			String mergingInput = configuration.getString("merger.input");			
+
+			String mergingInput = configuration.getString("merger.input");
 			String mergingOutput = configuration.getString("merger.output");
 
 			// Get the project name
@@ -37,65 +36,78 @@ public class Driver {
 			MergingEnvironment.get().setMergeableFolders(mergingInput);
 			MergingEnvironment.get().setOutputFolder(mergingOutput);
 
-            // Get the project merging rules
-            Class<?> _class = Class.forName(configuration.getString("project.merging_rules"));
-            ProjectMergingRules projectRules = (ProjectMergingRules) _class.newInstance();
+			// Get the project merging rules
+			Class<?> _class = Class.forName(configuration.getString("project.merging_rules"));
+			ProjectMergingRules projectRules = (ProjectMergingRules) _class.newInstance();
 
 			// Logging
 			ConglomerateMergerLogger merger = ConglomerateMergerLogger.getInstance();
 			merger.setProjectMergingRules(projectRules);
-			
+
 			String[] loggingMethods = configuration.getString("grader.logger", "csv").split(
 					"\\s*\\+\\s*");
 			for (String method : loggingMethods) {
 
-                // Add loggers
-                if (method.equals("local") || method.equals("local-txt"))
-                   	merger.addLogger(new LocalTextSummaryMerger());
-                if (method.equals("local") || method.equals("local-json"))
-                	merger.addLogger(new LocalJsonMerger());
-                if (method.equals("feedback") || method.equals("feedback-txt"))
-                	merger.addLogger(new FeedbackTextSummaryMerger());
-                if (method.equals("feedback") || method.equals("feedback-json"))
-                	merger.addLogger(new FeedbackJsonMerger());
-                if (method.equals("spreadsheet"))
-                	merger.addLogger(new SpreadsheetMerger());
-                if (method.equals("csv"))
-                	merger.addLogger(new CsvMerger());
+				// Add loggers
+				if (method.equals("local") || method.equals("local-txt")) {
+					merger.addLogger(new LocalTextSummaryMerger());
+				}
+				if (method.equals("local") || method.equals("local-json")) {
+					merger.addLogger(new LocalJsonMerger());
+				}
+				if (method.equals("feedback") || method.equals("feedback-txt")) {
+					merger.addLogger(new FeedbackTextSummaryMerger());
+				}
+				if (method.equals("feedback") || method.equals("feedback-json")) {
+					merger.addLogger(new FeedbackJsonMerger());
+				}
+				if (method.equals("spreadsheet")) {
+					merger.addLogger(new SpreadsheetMerger());
+				}
+				if (method.equals("csv")) {
+					merger.addLogger(new CsvMerger());
+				}
 			}
 
-//            // Run the grading process
-//            String controller = configuration.getString("grader.controller", "GradingManager");
-//            if (controller.equals("GradingManager")) {
-//
-//                // Run the GraderManager
-//                GradingManager manager = new GradingManager(projectName, requirements);
-//                manager.run();
-//
-//            } else if (controller.equals("SakaiProjectDatabase")) {
-//
-//                // Start the grading process by, first, getting the settings the running the project database
-//                SettingsWindow settingsWindow = SettingsWindow.create();
-//                settingsWindow.awaitBegin();
-//
-//                // Logging/results saving
-//                FeatureGradeRecorderSelector.setFactory(new ConglomerateRecorderFactory());
-//
-//                // Create the database
-//                ProjectDatabaseWrapper database = new ProjectDatabaseWrapper();
-//                database.addProjectRequirements(requirements);
-//
-//                // Possibly set the stepper displayer
-//                boolean useFrameworkGUI = configuration.getBoolean("grader.controller.useFrameworkGUI", false);
-//                if (useFrameworkGUI)
-//                    database.setProjectStepperDisplayer(new ProjectStepperDisplayerWrapper());
-//
-//                // Feedback
-////                database.setAutoFeedback(ConglomerateRecorder.getInstance());
-//                database.setManualFeedback(ConglomerateRecorder.getInstance());
-//
-//                database.nonBlockingRunProjectsInteractively();
-//            }
+			// // Run the grading process
+			// String controller = configuration.getString("grader.controller",
+			// "GradingManager");
+			// if (controller.equals("GradingManager")) {
+			//
+			// // Run the GraderManager
+			// GradingManager manager = new GradingManager(projectName,
+			// requirements);
+			// manager.run();
+			//
+			// } else if (controller.equals("SakaiProjectDatabase")) {
+			//
+			// // Start the grading process by, first, getting the settings the
+			// running the project database
+			// SettingsWindow settingsWindow = SettingsWindow.create();
+			// settingsWindow.awaitBegin();
+			//
+			// // Logging/results saving
+			// FeatureGradeRecorderSelector.setFactory(new
+			// ConglomerateRecorderFactory());
+			//
+			// // Create the database
+			// ProjectDatabaseWrapper database = new ProjectDatabaseWrapper();
+			// database.addProjectRequirements(requirements);
+			//
+			// // Possibly set the stepper displayer
+			// boolean useFrameworkGUI =
+			// configuration.getBoolean("grader.controller.useFrameworkGUI",
+			// false);
+			// if (useFrameworkGUI)
+			// database.setProjectStepperDisplayer(new
+			// ProjectStepperDisplayerWrapper());
+			//
+			// // Feedback
+			// // database.setAutoFeedback(ConglomerateRecorder.getInstance());
+			// database.setManualFeedback(ConglomerateRecorder.getInstance());
+			//
+			// database.nonBlockingRunProjectsInteractively();
+			// }
 
 		} catch (ConfigurationException e) {
 			System.err.println("Error loading config file.");

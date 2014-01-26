@@ -2,12 +2,11 @@ package framework.merging.navigation;
 
 import java.util.List;
 
-import framework.navigation.BulkDownloadFolder;
 import framework.navigation.NotValidDownloadFolderException;
 
-
 public interface MergeableGraderResultFolders {
-	
-	public List<GraderResultFolder> getGraderResultFolders() throws NotValidResultFolder, NotValidDownloadFolderException;
-	
+
+	public List<GraderResultFolder> getGraderResultFolders() throws NotValidResultFolder,
+			NotValidDownloadFolderException;
+
 }
