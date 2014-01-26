@@ -13,6 +13,7 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import framework.merging.ProjectMergingRules;
 import framework.merging.logging.ConglomerateMergerLogger;
 import framework.merging.logging.loggers.LocalTextSummaryMerger;
+import framework.merging.navigation.MergeableGraderResultFolders;
 
 /**
  * This is the entry class for the grading tools that Maven will reference. Use
@@ -26,10 +27,15 @@ public class Driver {
 			// Load the config file
 			PropertiesConfiguration configuration = new PropertiesConfiguration(
 					"./config/config.properties");
+			
+			String mergingInput = configuration.getString("merger.input");			
+			String mergingOutput = configuration.getString("merger.output");
 
 			// Get the project name
 			String projectName = configuration.getString("project.name");
 			MergingEnvironment.get().setAssignmentName(projectName);
+			MergingEnvironment.get().setMergeableFolders(mergingInput);
+			MergingEnvironment.get().setOutputFolder(mergingOutput);
 
             // Get the project merging rules
             Class<?> _class = Class.forName(configuration.getString("project.merging_rules"));
@@ -57,9 +63,6 @@ public class Driver {
                 if (method.equals("csv"))
                 	merger.addLogger(new CsvMerger());
 			}
-			
-			String mergingInput = configuration.getString("merger.input");
-			String mergingOutput = configuration.getString("merger.output");
 
 //            // Run the grading process
 //            String controller = configuration.getString("grader.controller", "GradingManager");
