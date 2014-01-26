@@ -57,6 +57,9 @@ public class Driver {
                 if (method.equals("csv"))
                 	merger.addLogger(new CsvMerger());
 			}
+			
+			String mergingInput = configuration.getString("merger.input");
+			String mergingOutput = configuration.getString("merger.output");
 
 //            // Run the grading process
 //            String controller = configuration.getString("grader.controller", "GradingManager");
