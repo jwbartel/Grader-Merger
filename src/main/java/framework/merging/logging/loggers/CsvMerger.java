@@ -54,10 +54,6 @@ public class CsvMerger extends MergerLogger {
 					key += split[i];
 				}
 
-				if (line.startsWith("ededmond")) {
-					System.out.println("reached");
-				}
-
 				Double mergedVal = (Double) MergingEnvironment.get().getMergingRules()
 						.getMergedVal(ResultTypes.FINAL_SCORE, outputVal, csvResults.get(key));
 				writer.write(key + ",");

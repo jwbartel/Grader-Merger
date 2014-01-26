@@ -15,7 +15,7 @@ public class MergeableSakaiGraderResultFolders implements MergeableGraderResultF
 	}
 
 	@Override
-	public List<GraderResultFolder> getGraderResultFolders() throws NotValidResultFolder,
+	public List<GraderResultFolder> getGraderResultFolders() throws NotValidResultFolderException,
 			NotValidDownloadFolderException {
 		File[] subfolders = folder.listFiles();
 

@@ -1,11 +1,6 @@
 package mergingTools;
 
-import mergingTools.utils.CsvMerger;
-import mergingTools.utils.FeedbackJsonMerger;
-import mergingTools.utils.FeedbackTextSummaryMerger;
-import mergingTools.utils.LocalJsonMerger;
 import mergingTools.utils.MergingEnvironment;
-import mergingTools.utils.SpreadsheetMerger;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -13,7 +8,12 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import framework.merging.MergingManager;
 import framework.merging.ProjectMergingRules;
 import framework.merging.logging.ConglomerateMergerLogger;
+import framework.merging.logging.loggers.CsvMerger;
+import framework.merging.logging.loggers.FeedbackJsonMerger;
+import framework.merging.logging.loggers.FeedbackTextSummaryMerger;
+import framework.merging.logging.loggers.LocalJsonMerger;
 import framework.merging.logging.loggers.LocalTextSummaryMerger;
+import framework.merging.logging.loggers.SpreadsheetMerger;
 
 /**
  * This is the entry class for the grading tools that Maven will reference. Use
@@ -37,6 +37,10 @@ public class Driver {
 
 			// Get the project name
 			String projectName = configuration.getString("project.name");
+			mergingInput = mergingInput.replace("{projectName}", projectName);
+			mergingOutput = mergingOutput.replace("{projectName}", projectName);
+
+			// Setup the environment
 			MergingEnvironment.get().setAssignmentName(projectName);
 			MergingEnvironment.get().setMergingRules(projectRules);
 			MergingEnvironment.get().setMergeableFolders(mergingInput);

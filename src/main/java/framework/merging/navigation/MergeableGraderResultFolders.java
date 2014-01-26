@@ -6,7 +6,7 @@ import framework.navigation.NotValidDownloadFolderException;
 
 public interface MergeableGraderResultFolders {
 
-	public List<GraderResultFolder> getGraderResultFolders() throws NotValidResultFolder,
+	public List<GraderResultFolder> getGraderResultFolders() throws NotValidResultFolderException,
 			NotValidDownloadFolderException;
 
 }

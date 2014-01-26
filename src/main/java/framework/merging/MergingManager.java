@@ -4,7 +4,7 @@ import mergingTools.utils.MergingEnvironment;
 import framework.merging.logging.ConglomerateMergerLogger;
 import framework.merging.navigation.GraderResultFolder;
 import framework.merging.navigation.MergeableGraderResultFolders;
-import framework.merging.navigation.NotValidResultFolder;
+import framework.merging.navigation.NotValidResultFolderException;
 import framework.navigation.NotValidDownloadFolderException;
 
 public class MergingManager {
@@ -22,7 +22,7 @@ public class MergingManager {
 			for (GraderResultFolder resultFolder : resultFolders.getGraderResultFolders()) {
 				ConglomerateMergerLogger.getInstance().mergeResults(resultFolder);
 			}
-		} catch (NotValidResultFolder e) {
+		} catch (NotValidResultFolderException e) {
 			System.out.println("Result folder not valid: " + e.getMessage());
 		} catch (NotValidDownloadFolderException e) {
 			System.out.println("No valid bulk download folder");

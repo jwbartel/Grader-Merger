@@ -3,6 +3,7 @@ package framework.merging.navigation;
 import java.io.File;
 import java.io.FileFilter;
 
+import mergingTools.utils.MergingEnvironment;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import scala.Option;
@@ -17,16 +18,20 @@ public class SakaiGraderResultFolder implements GraderResultFolder {
 	private final File spreadsheetFile;
 	private final BulkDownloadFolder bulkDownloadFolder;
 
-	public SakaiGraderResultFolder(String path) throws NotValidResultFolder,
+	public SakaiGraderResultFolder(String path) throws NotValidResultFolderException,
 			NotValidDownloadFolderException {
-		folder = new File(path);
+		File topFolder = new File(path);
+		folder = new File(topFolder, MergingEnvironment.get().getAssignmentName());
+		if (!(folder.exists() && folder.isDirectory())) {
+			throw new NotValidResultFolderException("Missing assignment folder: " + path);
+		}
 		spreadsheetFile = new File(folder, "grades.xlsx");
 		if (!spreadsheetFile.exists()) {
-			throw new NotValidResultFolder("Missing grades.xlsx");
+			throw new NotValidResultFolderException("Missing grades.xlsx");
 		}
 		Option<SakaiBulkDownloadFolder> bulkDownloadOption = findBulkDownloadFolder();
 		if (bulkDownloadOption.isEmpty()) {
-			throw new NotValidResultFolder("Missing a bulk download folder");
+			throw new NotValidResultFolderException("Missing a bulk download folder");
 		}
 		bulkDownloadFolder = bulkDownloadOption.get();
 	}
