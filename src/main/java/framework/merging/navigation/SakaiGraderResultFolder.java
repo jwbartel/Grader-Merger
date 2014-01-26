@@ -42,7 +42,8 @@ public class SakaiGraderResultFolder implements GraderResultFolder {
 
 			@Override
 			public boolean accept(File path) {
-				return path.isDirectory();
+				return path.isDirectory()
+						&& path.getName().equals(MergingEnvironment.get().getAssignmentName());
 			}
 		});
 		if (foundFiles.length > 0) {
@@ -69,7 +70,9 @@ public class SakaiGraderResultFolder implements GraderResultFolder {
 			Option<File> resultsFolder = DirectoryUtils.find(folder, new FileFilter() {
 				@Override
 				public boolean accept(File pathname) {
-					return pathname.isDirectory();
+					return pathname.isDirectory()
+							&& pathname.getName().equals(
+									MergingEnvironment.get().getAssignmentName());
 				}
 			});
 			if (resultsFolder.isDefined()) {
