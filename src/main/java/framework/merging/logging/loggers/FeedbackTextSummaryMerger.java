@@ -17,6 +17,7 @@ public class FeedbackTextSummaryMerger extends MergerLogger {
 
 	@Override
 	public void mergeResults(GraderResultFolder resultFolder, File mergeFolder) {
+		System.out.println("\tMerging Text Feedback...");
 
 		BulkDownloadFolder bulkDownloadFolder = resultFolder.getBulkDownloadFolder();
 
@@ -48,6 +49,7 @@ public class FeedbackTextSummaryMerger extends MergerLogger {
 			}
 
 		}
+		System.out.println("\tDone.");
 
 	}
 

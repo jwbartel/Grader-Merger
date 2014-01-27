@@ -22,6 +22,7 @@ public class CsvMerger extends MergerLogger {
 
 	private void writeResults(File outputCsvFile, Map<String, Double> csvResults) {
 
+		System.out.println("\tMerging CSVs...");
 		List<String> csvLines;
 		try {
 			csvLines = FileUtils.readLines(outputCsvFile);
@@ -66,6 +67,7 @@ public class CsvMerger extends MergerLogger {
 		} catch (IOException e) {
 			System.out.println("Error writing merged results.");
 		}
+		System.out.println("\tDone.");
 	}
 
 	private Map<String, Double> loadResults(File csvFile) throws FileNotFoundException {

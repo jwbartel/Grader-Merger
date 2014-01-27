@@ -15,38 +15,20 @@ public class ResultTypes {
 	public static final ResultType TEXT_FEEDBACK = new ResultType();
 	public static final ResultType JSON_FEEDBACK = new ResultType();
 
-	public static class FeatureResultType extends ResultType {
-		String featureName;
+	public static class NamedResultType extends ResultType {
+		String name;
 
-		public FeatureResultType(String name) {
-			this.featureName = name;
+		public NamedResultType(String name) {
+			this.name = name;
 		}
 
 		@Override
 		public boolean equals(Object o) {
-			if (!(o instanceof FeatureResultType)) {
+			if (!(o instanceof NamedResultType)) {
 				return false;
 			}
 
-			return featureName.equals(((FeatureResultType) o).featureName);
-		}
-
-	}
-
-	public static class RestrictionResultType extends ResultType {
-		String restrictionName;
-
-		public RestrictionResultType(String name) {
-			this.restrictionName = name;
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if (!(o instanceof RestrictionResultType)) {
-				return false;
-			}
-
-			return restrictionName.equals(((RestrictionResultType) o).restrictionName);
+			return name.equals(((NamedResultType) o).name);
 		}
 
 	}

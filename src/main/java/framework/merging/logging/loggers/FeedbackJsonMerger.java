@@ -17,6 +17,7 @@ public class FeedbackJsonMerger extends MergerLogger {
 
 	@Override
 	public void mergeResults(GraderResultFolder resultFolder, File mergeFolder) {
+		System.out.println("\tMerging JSONs...");
 
 		BulkDownloadFolder bulkDownloadFolder = resultFolder.getBulkDownloadFolder();
 
@@ -49,6 +50,7 @@ public class FeedbackJsonMerger extends MergerLogger {
 			}
 
 		}
+		System.out.println("\tDone.");
 	}
 
 }
