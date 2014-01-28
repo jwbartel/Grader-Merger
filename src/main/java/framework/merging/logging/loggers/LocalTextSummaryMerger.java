@@ -1,16 +1,18 @@
 package framework.merging.logging.loggers;
 
-import java.io.File;
+import framework.merging.rules.ResultTypes;
+import framework.merging.rules.ResultTypes.ResultType;
 
-import framework.merging.logging.MergerLogger;
-import framework.merging.navigation.GraderResultFolder;
-
-public class LocalTextSummaryMerger extends MergerLogger {
+public class LocalTextSummaryMerger extends LocalMerger {
 
 	@Override
-	public void mergeResults(GraderResultFolder resultFolder, File outputFolder) {
-		// TODO Auto-generated method stub
+	protected ResultType getResultType() {
+		return ResultTypes.LOCAL_JSON_FEEDBACK;
+	}
 
+	@Override
+	protected String getLocalFileRegex() {
+		return ".+, .+(.+)[.]txt";
 	}
 
 }
