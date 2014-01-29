@@ -17,7 +17,7 @@ public class ConglomerateMergerLogger {
 
 	// Actual definition
 
-	private List<MergerLogger> loggers;
+	private final List<MergerLogger> loggers;
 	private File outputFolder;
 
 	private ConglomerateMergerLogger() {
