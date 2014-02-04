@@ -26,6 +26,8 @@ public class FeedbackTextSummaryMerger extends MergerLogger {
 			File textFeedbackFile = new File(feedbackFolder, "feedback.txt");
 			File mergedTextFeedbackFile = findLocationInMerge(mergeFolder, resultFolder,
 					textFeedbackFile);
+			mergedTextFeedbackFile = new File(mergedTextFeedbackFile.getParent(),
+					"resubmission-feedback.txt");
 
 			// Determine which of the two folders to write into the merged
 			// folder
