@@ -26,9 +26,6 @@ public class SakaiGraderResultFolder implements GraderResultFolder {
 			throw new NotValidResultFolderException("Missing assignment folder: " + path);
 		}
 		spreadsheetFile = new File(folder, "grades.xlsx");
-		if (!spreadsheetFile.exists()) {
-			throw new NotValidResultFolderException("Missing grades.xlsx");
-		}
 		Option<SakaiBulkDownloadFolder> bulkDownloadOption = findBulkDownloadFolder();
 		if (bulkDownloadOption.isEmpty()) {
 			throw new NotValidResultFolderException("Missing a bulk download folder");

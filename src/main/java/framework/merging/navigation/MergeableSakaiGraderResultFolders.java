@@ -22,7 +22,15 @@ public class MergeableSakaiGraderResultFolders implements MergeableGraderResultF
 		List<GraderResultFolder> resultFolders = new ArrayList<GraderResultFolder>();
 		for (File subfolder : subfolders) {
 			System.out.println("Loading results from " + subfolder.getName());
-			resultFolders.add(new SakaiGraderResultFolder(subfolder.getAbsolutePath()));
+			try {
+				resultFolders.add(new SakaiGraderResultFolder(subfolder.getAbsolutePath()));
+			} catch (NotValidResultFolderException e) {
+				if (e.getMessage().contains("Missing assignment folder:")) {
+					System.err.println(e.getMessage());
+				} else {
+					throw e;
+				}
+			}
 		}
 
 		return resultFolders;
