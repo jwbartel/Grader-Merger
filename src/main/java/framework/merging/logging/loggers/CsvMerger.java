@@ -40,6 +40,7 @@ public class CsvMerger extends MergerLogger {
 
 			while (lineIter.hasNext()) {
 				String line = lineIter.next();
+				line = correctCsvEntrySpacing(line);
 
 				String key = "";
 				Double outputVal = null;
@@ -53,10 +54,13 @@ public class CsvMerger extends MergerLogger {
 						key += ",";
 					}
 					key += split[i];
+
 				}
 
+				Double inputVal = csvResults.get(key);
 				Double mergedVal = (Double) MergingEnvironment.get().getMergingRules()
-						.getMergedVal(ResultTypes.FINAL_SCORE, outputVal, csvResults.get(key));
+						.getMergedVal(ResultTypes.FINAL_SCORE, outputVal, inputVal);
+
 				writer.write(key + ",");
 				if (mergedVal != null) {
 					writer.write("" + mergedVal);
@@ -70,6 +74,21 @@ public class CsvMerger extends MergerLogger {
 		System.out.println("\tDone.");
 	}
 
+	private String correctCsvEntrySpacing(String entry) {
+		String[] split = entry.split(",");
+		String correctedEntry = "";
+		for (int i = 0; i < split.length; i++) {
+			if (i > 0) {
+				correctedEntry += ",";
+			}
+			if (i == 4) {
+				correctedEntry += "   ";
+			}
+			correctedEntry += split[i].trim();
+		}
+		return correctedEntry;
+	}
+
 	private Map<String, Double> loadResults(File csvFile) throws FileNotFoundException {
 		Map<String, Double> csvResults = new TreeMap<String, Double>();
 		Scanner scanner = new Scanner(csvFile);
@@ -78,6 +97,7 @@ public class CsvMerger extends MergerLogger {
 		scanner.nextLine();
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();
+			line = correctCsvEntrySpacing(line);
 
 			String[] split = line.split(",");
 			if (split.length != 5) {
@@ -106,7 +126,7 @@ public class CsvMerger extends MergerLogger {
 			} catch (IOException e) {
 				System.out.println("Error creating csv file: " + outputCsvFile);
 			}
-			return;
+			// return;
 		}
 
 		Map<String, Double> csvResults;

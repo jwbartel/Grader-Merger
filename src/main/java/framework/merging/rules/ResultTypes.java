@@ -36,6 +36,8 @@ public class ResultTypes {
 	public static final ResultType LOCAL_TEXT_FEEDBACK = new ResultType(6);
 	public static final ResultType LOCAL_JSON_FEEDBACK = new ResultType(7);
 
+	public static final ResultType SOURCES_FEEDBACK = new ResultType(8);
+
 	public static class NamedResultType extends ResultType {
 		String name;
 

@@ -13,6 +13,7 @@ import framework.merging.logging.loggers.FeedbackJsonMerger;
 import framework.merging.logging.loggers.FeedbackTextSummaryMerger;
 import framework.merging.logging.loggers.LocalJsonMerger;
 import framework.merging.logging.loggers.LocalTextSummaryMerger;
+import framework.merging.logging.loggers.SourcesMerger;
 import framework.merging.logging.loggers.SpreadsheetMerger;
 
 /**
@@ -74,6 +75,9 @@ public class Driver {
 				}
 				if (method.equals("csv")) {
 					merger.addLogger(new CsvMerger());
+				}
+				if (method.equals("source")) {
+					merger.addLogger(new SourcesMerger());
 				}
 			}
 			System.out.println("done.");
