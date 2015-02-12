@@ -12,7 +12,6 @@ public class ResultTypes {
 			this.code = code;
 		}
 
-		@Override
 		public int compareTo(ResultType o) {
 			return this.code.compareTo(o.code);
 		}

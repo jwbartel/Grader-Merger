@@ -23,12 +23,10 @@ public class MergedSakaiGradesFolder implements MergedGradesFolder {
 		}
 	}
 
-	@Override
 	public File getUploadableFolder() {
 		return uploadableFolder;
 	}
 
-	@Override
 	public void zipUploadableFolder() throws ZipException {
 		File outFile = new File(getUploadableFolder().getPath() + ".zip");
 		if (outFile.exists()) {

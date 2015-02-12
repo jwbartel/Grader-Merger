@@ -37,7 +37,6 @@ public class SakaiGraderResultFolder implements GraderResultFolder {
 			throws NotValidDownloadFolderException {
 		File[] foundFiles = folder.listFiles(new FileFilter() {
 
-			@Override
 			public boolean accept(File path) {
 				return path.isDirectory()
 						&& path.getName().equals(MergingEnvironment.get().getAssignmentName());
@@ -48,7 +47,6 @@ public class SakaiGraderResultFolder implements GraderResultFolder {
 		}
 
 		Option<File> zipFile = DirectoryUtils.find(folder, new FileFilter() {
-			@Override
 			public boolean accept(File pathname) {
 				return pathname.getName().endsWith(".zip");
 			}
@@ -65,7 +63,6 @@ public class SakaiGraderResultFolder implements GraderResultFolder {
 
 			// Look for a folder, taking the first one found.
 			Option<File> resultsFolder = DirectoryUtils.find(folder, new FileFilter() {
-				@Override
 				public boolean accept(File pathname) {
 					return pathname.isDirectory()
 							&& pathname.getName().equals(
@@ -87,17 +84,14 @@ public class SakaiGraderResultFolder implements GraderResultFolder {
 		}
 	}
 
-	@Override
 	public File getFolder() {
 		return folder;
 	}
 
-	@Override
 	public File getSpreadsheetFolder() {
 		return spreadsheetFile;
 	}
 
-	@Override
 	public BulkDownloadFolder getBulkDownloadFolder() {
 		return bulkDownloadFolder;
 	}

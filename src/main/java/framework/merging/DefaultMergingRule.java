@@ -6,7 +6,6 @@ import framework.merging.rules.MergingRule;
 
 public class DefaultMergingRule implements MergingRule {
 
-	@Override
 	public Object mergeResults(Object version1, Object version2) {
 		if (version1 == null) {
 			return version2;

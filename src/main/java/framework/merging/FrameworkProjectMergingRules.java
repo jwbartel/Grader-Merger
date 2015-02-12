@@ -15,12 +15,10 @@ public class FrameworkProjectMergingRules implements ProjectMergingRules {
 		rules = new TreeMap<ResultType, MergingRule>();
 	}
 
-	@Override
 	public void setGeneralRule(MergingRule rule) {
 		this.generalRule = rule;
 	}
 
-	@Override
 	public void add(ResultType resultType, MergingRule rule) {
 		rules.put(resultType, rule);
 	}
