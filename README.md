@@ -93,14 +93,31 @@ The name of the jar depends on the `version` defined in `pom.xml`. Run the jar:
 java -jar target/grader-merger-X-jar-with-dependencies.jar
 ```
 
-If you have the project set up in an IDE you can run it there as well.
+If you have the project set up in an IDE you can run it there as well (entry point is src/main/java/mergingTools/Driver.java) (this is the recommended running method)
+
+For any run method, you must have a findable folder pointed to by merger.input. For example, if I wished to merge two people's graded sakai folders for an assignment I do the following:
+-Say Joe and Ann each gave me a folder
+-As the default merger.input is log/grades, I create a file system as follows:
+log/grades
+	/Ann
+		/AssignmentX
+			/AssignmentX
+				(actual contents of folder)
+	/Joe
+		/AssignmentX
+			/AssignmentX
+				(actual contents of folder)
+The grader will then merge when I run from Driver.java, and I can find my results in log/merged-grades/AssignmentX
+Running as a jar w/ dependencies will be the same process, just be sure to have the config/config and your log folder populated with the file systems you wish to merge in the format mentioned above.
 
 # Configuration
 
 The entry point in the program (the one which Maven is configured to use) looks at the configuration file to determine
 what and how to run. There are the following settings that you can set:
 
-* `project.name`: The name of the project. Something like "Assignment4".
+* `project.name`: The name of the project. Something like "Assignment4". NOTE: this must be the same name as the folder you get from sakai unzipped.
+* `merger.input`: Location of file systems to merge, default is log/grades".
+* `merger.output`: Destination of finished merged file system, along with a zipped up version that should be digestible by sakai, default is log/merged-grades/(projectName)".
 * `grader.logger`: This setting allows you to set how results will be saved. You can choose which loggers are used by selecting any of the following concatenated with '+':
  * `feedback-txt`: This saves a text file in the students' feedback folder
  * `feedback-json`: This saves a json file in the students' feedback folder
@@ -109,3 +126,4 @@ what and how to run. There are the following settings that you can set:
  * `local-json`: This saves a json file in the local log folder
  * `local`: Equivalent to "local-txt + local-json"
  * `spreadsheet`: This saves all the scores in a spreadsheet
+ NOTE: for sake of simplicity and in the interest of saving space, recommended grader.logger settings is following line: grader.logger = feedback-txt + spreadsheet + csv
