@@ -97,12 +97,15 @@ If you have the project set up in an IDE you can run it there as well (entry poi
 
 For any run method, you must have a findable folder pointed to by merger.input. For example, if I wished to merge two people's graded sakai folders for an assignment I do the following:
 -Say Joe and Ann each gave me a folder
--As the default merger.input is log/grades, I create a file system as follows:
+-As the default merger.input is log/grades, I create a file system as follows):
+For ann I throw in:
 log/grades
 	/Ann
 		/AssignmentX
 			/AssignmentX
-				(actual contents of folder)
+				(actual contents of folder).
+For Joe I throw in:
+log/grades
 	/Joe
 		/AssignmentX
 			/AssignmentX
