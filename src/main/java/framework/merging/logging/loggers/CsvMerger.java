@@ -26,7 +26,7 @@ public class CsvMerger extends MergerLogger {
 		List<String> csvLines;
 		try {
 			csvLines = FileUtils.readLines(outputCsvFile);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.out.println("Error loading csv results from " + outputCsvFile);
 			return;
 		}
@@ -46,7 +46,7 @@ public class CsvMerger extends MergerLogger {
 				Double outputVal = null;
 
 				String[] split = line.split(",");
-				if (split.length >= 5) {
+				if (split.length>=5 &&!isBlank(split[4])) { //Is there a score present?
 					outputVal = Double.valueOf(split[4]);
 				}
 				for (int i = 0; i < 4; i++) {
@@ -100,12 +100,12 @@ public class CsvMerger extends MergerLogger {
 			line = correctCsvEntrySpacing(line);
 
 			String[] split = line.split(",");
-			if (split.length != 5) {
+			if (split.length <= 4 || isBlank(split[4])) {
 				continue;
 			}
 
-			String key = line.substring(0, line.lastIndexOf(','));
-			Double value = Double.parseDouble(line.substring(line.lastIndexOf(',') + 1));
+			String key = split[0]+","+split[1]+","+split[2]+","+split[3];
+			Double value = Double.parseDouble(split[4]);
 			csvResults.put(key, value);
 		}
 		scanner.close();
@@ -140,5 +140,17 @@ public class CsvMerger extends MergerLogger {
 		writeResults(outputCsvFile, csvResults);
 
 	}
+	  public static boolean isBlank(String str) {
+	      int strLen;
+	      if (str == null || (strLen = str.length()) == 0) {
+	          return true;
+	      }
+	      for (int i = 0; i < strLen; i++) {
+	          if ((Character.isWhitespace(str.charAt(i)) == false)) {
+	              return false;
+	          }
+	      }
+	      return true;
+	  }
 
 }
