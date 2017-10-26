@@ -44,7 +44,6 @@ public class CsvMerger extends MergerLogger {
 
 				String key = "";
 				Double outputVal = null;
-
 				String[] split = line.split(",");
 				if (split.length>=5 &&!isBlank(split[4])) { //Is there a score present?
 					outputVal = Double.valueOf(split[4]);
@@ -75,6 +74,8 @@ public class CsvMerger extends MergerLogger {
 	}
 
 	private String correctCsvEntrySpacing(String entry) {
+		entry = entry.replace("\"", ""); //remove all quotes, they mess up the merging
+
 		String[] split = entry.split(",");
 		String correctedEntry = "";
 		for (int i = 0; i < split.length; i++) {
